@@ -3,7 +3,6 @@ import 'package:demo_bloc/cats_repository.dart';
 import 'package:demo_bloc/cats_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 
 class BlocCatsView extends StatefulWidget {
   const BlocCatsView({super.key});
@@ -52,21 +51,20 @@ class _BlocCatsViewState extends State<BlocCatsView> {
     return Text(error.message);
   }
 
-  ListView buildComplete(CatsCompleted state) {
+  Widget buildComplete(CatsCompleted state) {
     return ListView.builder(
-        itemCount: state.response.length,
-        itemBuilder: (context, index) => ListTile(
-              title: Image.network(
-                state.response[index].imageUrl.toString(),
-              ),
-              subtitle: Text(
-                state.response[index].description.toString(),
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ));
+      itemCount: state.response.length,
+      itemBuilder: (context, index) => ListTile(
+        title: Image.network(
+          state.response[index].imageUrl.toString(),
+        ),
+        subtitle: Text(
+          state.response[index].description.toString(),
+          style: TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
+        ),
+      ),
+    );
   }
 
   Center buildLoading() {
@@ -76,11 +74,7 @@ class _BlocCatsViewState extends State<BlocCatsView> {
   }
 
   Center buildInitial(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [Text("hello!"), buildFABCall(context)],
-      ),
-    );
+    return Center(child: buildFABCall(context));
   }
 
   FloatingActionButton buildFABCall(BuildContext context) {
